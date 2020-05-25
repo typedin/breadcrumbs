@@ -24,11 +24,11 @@ class NodeTest extends TestCase
      */
     public function it_cannot_be_instanciate_with_an_empty_url()
     {
-        $url = "";
-        $name = "home";
+        $url = '';
+        $name = 'home';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Node url cannot be empty.");
+        $this->expectExceptionMessage('Node url cannot be empty.');
 
         new Node($url, $name);
     }
@@ -38,11 +38,11 @@ class NodeTest extends TestCase
      */
     public function it_cannot_be_instanciate_with_an_empty_name()
     {
-        $url = "/";
-        $name = "";
+        $url = '/';
+        $name = '';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Node name cannot be empty.");
+        $this->expectExceptionMessage('Node name cannot be empty.');
 
         new Node($url, $name);
     }

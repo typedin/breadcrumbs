@@ -7,7 +7,8 @@ use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
 /**
- * Class Breadcrumbs
+ * Class Breadcrumbs.
+ *
  * @author typedin
  */
 final class Breadcrumbs
@@ -16,6 +17,7 @@ final class Breadcrumbs
 
     /**
      * @param array $links
+     *
      * @throws InvalidArgumentException
      */
     public function __construct(array $links)
@@ -23,14 +25,14 @@ final class Breadcrumbs
         $urls = array_map(function ($link) {
             return $link[0];
         }, $links);
-        
-        Assert::uniqueValues($urls, "You may only create breadcrumbs with unique urls.");
+
+        Assert::uniqueValues($urls, 'You may only create breadcrumbs with unique urls.');
 
         $names = array_map(function ($link) {
             return $link[1];
         }, $links);
 
-        Assert::uniqueValues($names, "You may only create breadcrumbs with unique names.");
+        Assert::uniqueValues($names, 'You may only create breadcrumbs with unique names.');
 
         foreach ($links as $link => $value) {
             $this->nodes[] = new Node(...$value);
@@ -51,6 +53,7 @@ final class Breadcrumbs
      * Check if a node is at the first position.
      *
      * @param Node $node
+     *
      * @return bool
      */
     public function isFirst(Node $node): bool
@@ -62,6 +65,7 @@ final class Breadcrumbs
      * Check if a node is at the last position.
      *
      * @param Node $node
+     *
      * @return bool
      */
     public function isLast(Node $node): bool
@@ -73,6 +77,7 @@ final class Breadcrumbs
      * Create ld+json json.
      *
      * @param string $url
+     *
      * @return string json encoded string
      */
     public function getLdJson(string $url): string
@@ -80,9 +85,9 @@ final class Breadcrumbs
         Assertion::url($url, "The provided url is not a valid url ({$url}).");
 
         return json_encode([
-            "@context" => "https://schema.org",
-            "@type" => "BreadcrumbList",
-            "itemListElement" => $this->createItemListElement($url)
+            '@context'        => 'https://schema.org',
+            '@type'           => 'BreadcrumbList',
+            'itemListElement' => $this->createItemListElement($url),
         ]);
     }
 
@@ -90,6 +95,7 @@ final class Breadcrumbs
      * Create a single item list element.
      *
      * @param string $url
+     *
      * @return arra:w
      */
     private function createItemListElement(string $url): array
@@ -99,10 +105,10 @@ final class Breadcrumbs
 
         foreach ($this->nodes as $node) {
             $elements[] = [
-                "@type" => "ListItem",
-                "position" => $position++,
-                "name" => $node->name(),
-                "item" => rtrim($url, "/") . "/" . $node->url()
+                '@type'    => 'ListItem',
+                'position' => $position++,
+                'name'     => $node->name(),
+                'item'     => rtrim($url, '/').'/'.$node->url(),
             ];
         }
 
