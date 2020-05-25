@@ -22,5 +22,8 @@
         "psr-4": {
             "Typedin\\Breadcrumbs\\": "src/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
