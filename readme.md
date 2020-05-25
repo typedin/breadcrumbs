@@ -1,4 +1,5 @@
-# Breadcrumbs generator [![Build Status](https://travis-ci.org/typedin/breadcrumbs.svg?branch=master)](https://travis-ci.org/typedin/breadcrumbs)
+# Breadcrumbs generator
+[![Build Status](https://travis-ci.org/typedin/breadcrumbs.svg?branch=master)](https://travis-ci.org/typedin/breadcrumbs) [![StyleCI](https://github.styleci.io/repos/266759389/shield?branch=master)](https://github.styleci.io/repos/266759389)
 
 ## Installation
 
