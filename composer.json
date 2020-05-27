@@ -1,7 +1,7 @@
 {
     "name": "typedin/breadcrumbs",
     "description": "breadcrumbs generator with ld+json support",
-    "keywords": ["breadcrumbs", "ld+json"],
+    "keywords": ["breadcrumbs", "ld json"],
     "license": "MIT",
     "authors": [
         {
