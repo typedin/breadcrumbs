@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "beberlei/assert": "^3.2",
         "php": ">=7.4.0",
+        "beberlei/assert": "^3.2",
         "webmozart/assert": "^1.8"
     },
     "require-dev": {
@@ -26,5 +26,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit"
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": "true"
 }
