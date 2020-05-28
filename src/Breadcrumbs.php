@@ -88,7 +88,7 @@ final class Breadcrumbs
             '@context'        => 'https://schema.org',
             '@type'           => 'BreadcrumbList',
             'itemListElement' => $this->createItemListElement($url),
-        ]);
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
     }
 
     /**
