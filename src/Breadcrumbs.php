@@ -108,7 +108,7 @@ final class Breadcrumbs
                 '@type'    => 'ListItem',
                 'position' => $position++,
                 'name'     => $node->name(),
-                'item'     => rtrim($url, '/').'/'.$node->url(),
+                'item'     => rtrim($url, '/').'/'.ltrim($node->url(), '/'),
             ];
         }
 

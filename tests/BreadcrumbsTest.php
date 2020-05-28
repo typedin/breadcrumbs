@@ -172,6 +172,36 @@ class BreadcrumbsTest extends TestCase
     /**
      * @test
      */
+    public function it_builds_valid_json_item_list_url_with_a_trailing_slash()
+    {
+        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+
+        $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
+
+        $this->assertEquals(
+            'https://example.com/books',
+            $itemListElement[0]['item']
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_builds_valid_json_item_list_url_with_a_leading_slash()
+    {
+        $sut = new Breadcrumbs([['/books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+
+        $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
+
+        $this->assertEquals(
+            'https://example.com/books',
+            $itemListElement[0]['item']
+        );
+    }
+
+    /**
+     * @test
+     */
     public function it_creates_a_valid_item_with_url_ending_with_a_slash()
     {
         $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
