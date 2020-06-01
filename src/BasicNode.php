@@ -2,8 +2,8 @@
 
 namespace Typedin\Breadcrumbs;
 
+use Assert\Assertion;
 use Typedin\Breadcrumbs\Contracts\Node;
-use Webmozart\Assert\Assert;
 
 /**
  * Class Node.
@@ -23,10 +23,10 @@ final class BasicNode implements Node
      */
     public function __construct(string $url, string $name)
     {
-        Assert::stringNotEmpty($url, 'Node url cannot be empty.');
+        Assertion::notEmpty($url, 'Node url cannot be empty.');
         $this->url = $url;
 
-        Assert::stringNotEmpty($name, 'Node name cannot be empty.');
+        Assertion::NotEmpty($name, 'Node name cannot be empty.');
         $this->name = $name;
     }
 
