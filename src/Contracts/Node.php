@@ -3,11 +3,12 @@
 namespace Typedin\Breadcrumbs\Contracts;
 
 /**
- * Interface Node
+ * Interface Node.
  * @author typedin
  */
 interface Node
 {
-    public function url() : string;
-    public function name() : string;
+    public function url(): string;
+
+    public function name(): string;
 }
