@@ -177,10 +177,12 @@ class BreadcrumbsTest extends TestCase
         $this->assertEquals(3, count($itemListElement));
 
         $this->assertEquals(1, $itemListElement[0]['position']);
+        $this->assertEquals(2, $itemListElement[1]['position']);
         $this->assertEquals(3, $itemListElement[2]['position']);
 
         $this->assertEquals('Books', $itemListElement[0]['name']);
         $this->assertEquals('Science Fiction', $itemListElement[1]['name']);
+        $this->assertEquals('Award Winners', $itemListElement[2]['name']);
     }
 
     /**
@@ -241,7 +243,7 @@ class BreadcrumbsTest extends TestCase
     public function it_builds_valid_json_item_list_url_with_a_leading_slash()
     {
         $sut = new Breadcrumbs([
-            new BasicNode('books', 'Books'),
+            new BasicNode('/books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
             new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
         ]);
