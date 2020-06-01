@@ -3,9 +3,7 @@
 namespace Typedin\Breadcrumbs;
 
 use Assert\Assertion;
-use InvalidArgumentException;
-use Webmozart\Assert\Assert;
-use Typedin\Breadcrumbs\BasicNode;
+use Typedin\Breadcrumbs\Contracts\Node;
 
 /**
  * Class Breadcrumbs.
@@ -23,19 +21,20 @@ final class Breadcrumbs
      */
     public function __construct(array $nodes)
     {
-        Assert::allIsInstanceOf($nodes, BasicNode::class, 'An array of nodes should be passed.');
+        Assertion::allIsInstanceOf($nodes, Node::class, 'An array of nodes should be passed.');
 
         $urls = array_map(function ($node) {
             return $node->url();
         }, $nodes);
+        
 
-        Assert::uniqueValues($urls, 'You may only create breadcrumbs with unique urls.');
+        Assertion::uniqueValues($urls, 'You may only create breadcrumbs with unique urls.');
 
         $names = array_map(function ($node) {
             return $node->name();
         }, $nodes);
 
-        Assert::uniqueValues($names, 'You may only create breadcrumbs with unique names.');
+        Assertion::uniqueValues($names, 'You may only create breadcrumbs with unique names.');
 
         $this->nodes = $nodes;
     }

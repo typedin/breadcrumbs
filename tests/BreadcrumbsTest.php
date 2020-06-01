@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Helmich\JsonAssert\JsonAssertions;
 use PHPUnit\Framework\TestCase;
 use Typedin\Breadcrumbs\Breadcrumbs;
-use TypeError;
 use Typedin\Breadcrumbs\BasicNode;
 
 /**
@@ -21,6 +20,7 @@ class BreadcrumbsTest extends TestCase
     public function it_must_be_instanciated_with_an_array_of_nodes()
     {
         $this->expectExceptionMessage('An array of nodes should be passed.');
+
         $sut = new Breadcrumbs(["not", "an", "array", "of", "nodes"]);
     }
 
@@ -30,7 +30,8 @@ class BreadcrumbsTest extends TestCase
     public function it_cannot_be_instanciate_with_twice_the_same_url()
     {
         $this->expectExceptionMessage('You may only create breadcrumbs with unique urls.');
-        $sut = new Breadcrumbs([
+
+        new Breadcrumbs([
             new BasicNode('/', 'home'),
             new BasicNode('/', 'not home')
         ]);
@@ -42,7 +43,8 @@ class BreadcrumbsTest extends TestCase
     public function it_cannot_be_instanciate_with_twice_the_same_name()
     {
         $this->expectExceptionMessage('You may only create breadcrumbs with unique names.');
-        $sut = new Breadcrumbs([
+
+        new Breadcrumbs([
             new BasicNode('/', 'same name'),
             new BasicNode('/not/home', 'same name')
         ]);
@@ -51,7 +53,7 @@ class BreadcrumbsTest extends TestCase
     /**
      * @test
      */
-    public function it_construct_an_array_of_nodes()
+    public function it_constructs_an_array_of_nodes()
     {
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
@@ -64,7 +66,7 @@ class BreadcrumbsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_tell_if_the_node_is_first()
+    public function it_can_tell_if_a_node_is_first()
     {
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
@@ -86,6 +88,21 @@ class BreadcrumbsTest extends TestCase
         ]);
 
         $this->assertTrue($sut->isLast($sut->nodes()[2]));
+    }
+
+    /**
+     * @test
+     */
+    public function a_node_inside_a_list_is_neither_first_nor_last()
+    {
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'home'),
+            new BasicNode('/not/home', 'not home'),
+            new BasicNode('/is/last', 'is last')
+        ]);
+
+        $this->assertFalse($sut->isFirst($sut->nodes()[1]));
+        $this->assertFalse($sut->isLast($sut->nodes()[1]));
     }
 
     /**
