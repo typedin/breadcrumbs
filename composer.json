@@ -11,8 +11,7 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "beberlei/assert": "^3.2",
-        "webmozart/assert": "^1.8"
+        "beberlei/assert": "dev-master"
     },
     "require-dev": {
         "helmich/phpunit-json-assert": "^3.1",
