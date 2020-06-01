@@ -2,6 +2,7 @@
 
 namespace Typedin\Breadcrumbs;
 
+use Typedin\Breadcrumbs\Contracts\Node;
 use Webmozart\Assert\Assert;
 
 /**
@@ -9,7 +10,7 @@ use Webmozart\Assert\Assert;
  *
  * @author typedin
  */
-final class Node
+final class BasicNode implements Node
 {
     private string $url;
     private string $name;

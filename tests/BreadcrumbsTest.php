@@ -6,6 +6,7 @@ use Helmich\JsonAssert\JsonAssertions;
 use PHPUnit\Framework\TestCase;
 use Typedin\Breadcrumbs\Breadcrumbs;
 use TypeError;
+use Typedin\Breadcrumbs\BasicNode;
 
 /**
  * @author yourname
@@ -17,10 +18,10 @@ class BreadcrumbsTest extends TestCase
     /**
      * @test
      */
-    public function it_must_be_instanciated_with_an_array()
+    public function it_must_be_instanciated_with_an_array_of_nodes()
     {
-        $this->expectException(TypeError::class);
-        $sut = new Breadcrumbs('not an array');
+        $this->expectExceptionMessage('An array of nodes should be passed.');
+        $sut = new Breadcrumbs(["not", "an", "array", "of", "nodes"]);
     }
 
     /**
@@ -29,7 +30,10 @@ class BreadcrumbsTest extends TestCase
     public function it_cannot_be_instanciate_with_twice_the_same_url()
     {
         $this->expectExceptionMessage('You may only create breadcrumbs with unique urls.');
-        $sut = new Breadcrumbs([['/', 'home'], ['/', 'not home']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'home'),
+            new BasicNode('/', 'not home')
+        ]);
     }
 
     /**
@@ -38,18 +42,23 @@ class BreadcrumbsTest extends TestCase
     public function it_cannot_be_instanciate_with_twice_the_same_name()
     {
         $this->expectExceptionMessage('You may only create breadcrumbs with unique names.');
-        $sut = new Breadcrumbs([['/', 'home'], ['/not/home', 'home']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'same name'),
+            new BasicNode('/not/home', 'same name')
+        ]);
     }
 
     /**
      * @test
      */
-    public function it_gives_back_the_correct_url_and_name_of_a_node()
+    public function it_construct_an_array_of_nodes()
     {
-        $sut = new Breadcrumbs([['/', 'home']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'home'),
+            new BasicNode('/not/home', 'not home')
+        ]);
 
-        $this->assertEquals('/', $sut->nodes()[0]->url());
-        $this->assertEquals('home', $sut->nodes()[0]->name());
+        $this->assertEquals(2, count($sut->nodes()));
     }
 
     /**
@@ -57,7 +66,10 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_can_tell_if_the_node_is_first()
     {
-        $sut = new Breadcrumbs([['/', 'home'], ['/not/home', 'not home']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'home'),
+            new BasicNode('/not/home', 'not home')
+        ]);
 
         $this->assertTrue($sut->isFirst($sut->nodes()[0]));
     }
@@ -67,7 +79,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_can_tell_if_the_node_is_last()
     {
-        $sut = new Breadcrumbs([['/', 'home'], ['/not/home', 'not home'], ['/last/link', 'is last']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('/', 'home'),
+            new BasicNode('/not/home', 'not home'),
+            new BasicNode('/is/last', 'is last')
+        ]);
 
         $this->assertTrue($sut->isLast($sut->nodes()[2]));
     }
@@ -77,7 +93,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_builds_valid_json_schema()
     {
-        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $result = $sut->getLdJson('https://example.com');
 
@@ -129,7 +149,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_builds_valid_json_item_list_element_name_position()
     {
-        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com'), true)['itemListElement'];
 
@@ -149,7 +173,9 @@ class BreadcrumbsTest extends TestCase
     {
         $this->expectExceptionMessage('The provided url is not a valid url (not a url).');
 
-        $sut = new Breadcrumbs([['books', 'Books']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+        ]);
 
         $sut->getLdJson('not a url');
     }
@@ -159,7 +185,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_builds_valid_json_item_list_url()
     {
-        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com'), true)['itemListElement'];
 
@@ -174,7 +204,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_builds_valid_json_item_list_url_with_a_trailing_slash()
     {
-        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
 
@@ -189,7 +223,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_builds_valid_json_item_list_url_with_a_leading_slash()
     {
-        $sut = new Breadcrumbs([['/books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
 
@@ -204,7 +242,11 @@ class BreadcrumbsTest extends TestCase
      */
     public function it_creates_a_valid_item_with_url_ending_with_a_slash()
     {
-        $sut = new Breadcrumbs([['books', 'Books'], ['books/sciencefiction', 'Science Fiction'], ['books/sciencefiction/award-winners', 'Award Winners']]);
+        $sut = new Breadcrumbs([
+            new BasicNode('books', 'Books'),
+            new BasicNode('books/sciencefiction', 'Science Fiction'),
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+        ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
 

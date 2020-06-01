@@ -5,6 +5,7 @@ namespace Typedin\Breadcrumbs;
 use Assert\Assertion;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
+use Typedin\Breadcrumbs\BasicNode;
 
 /**
  * Class Breadcrumbs.
@@ -20,23 +21,23 @@ final class Breadcrumbs
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(array $links)
+    public function __construct(array $nodes)
     {
-        $urls = array_map(function ($link) {
-            return $link[0];
-        }, $links);
+        Assert::allIsInstanceOf($nodes, BasicNode::class, 'An array of nodes should be passed.');
+
+        $urls = array_map(function ($node) {
+            return $node->url();
+        }, $nodes);
 
         Assert::uniqueValues($urls, 'You may only create breadcrumbs with unique urls.');
 
-        $names = array_map(function ($link) {
-            return $link[1];
-        }, $links);
+        $names = array_map(function ($node) {
+            return $node->name();
+        }, $nodes);
 
         Assert::uniqueValues($names, 'You may only create breadcrumbs with unique names.');
 
-        foreach ($links as $link => $value) {
-            $this->nodes[] = new Node(...$value);
-        }
+        $this->nodes = $nodes;
     }
 
     /**
@@ -56,7 +57,7 @@ final class Breadcrumbs
      *
      * @return bool
      */
-    public function isFirst(Node $node): bool
+    public function isFirst(BasicNode $node): bool
     {
         return $node->url() === $this->nodes[0]->url();
     }
@@ -68,7 +69,7 @@ final class Breadcrumbs
      *
      * @return bool
      */
-    public function isLast(Node $node): bool
+    public function isLast(BasicNode $node): bool
     {
         return $node->url() === end($this->nodes)->url();
     }

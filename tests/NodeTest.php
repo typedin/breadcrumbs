@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use ArgumentCountError;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Typedin\Breadcrumbs\Node;
+use Typedin\Breadcrumbs\BasicNode;
 
 class NodeTest extends TestCase
 {
@@ -16,7 +16,7 @@ class NodeTest extends TestCase
     {
         $this->expectException(ArgumentCountError::class);
 
-        new Node();
+        new BasicNode();
     }
 
     /**
@@ -30,7 +30,7 @@ class NodeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Node url cannot be empty.');
 
-        new Node($url, $name);
+        new BasicNode($url, $name);
     }
 
     /**
@@ -44,6 +44,6 @@ class NodeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Node name cannot be empty.');
 
-        new Node($url, $name);
+        new BasicNode($url, $name);
     }
 }
