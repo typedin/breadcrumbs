@@ -96,7 +96,7 @@ final class Breadcrumbs
      *
      * @param string $url
      *
-     * @return arra:w
+     * @return array
      */
     private function createItemListElement(string $url): array
     {
