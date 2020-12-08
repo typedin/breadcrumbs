@@ -26,7 +26,6 @@ final class Breadcrumbs
         $urls = array_map(function ($node) {
             return $node->url();
         }, $nodes);
-        
 
         Assertion::uniqueValues($urls, 'You may only create breadcrumbs with unique urls.');
 

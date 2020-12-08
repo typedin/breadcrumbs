@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use Helmich\JsonAssert\JsonAssertions;
 use PHPUnit\Framework\TestCase;
-use Typedin\Breadcrumbs\Breadcrumbs;
 use Typedin\Breadcrumbs\BasicNode;
+use Typedin\Breadcrumbs\Breadcrumbs;
 
 /**
  * @author yourname
@@ -21,7 +21,7 @@ class BreadcrumbsTest extends TestCase
     {
         $this->expectExceptionMessage('An array of nodes should be passed.');
 
-        $sut = new Breadcrumbs(["not", "an", "array", "of", "nodes"]);
+        $sut = new Breadcrumbs(['not', 'an', 'array', 'of', 'nodes']);
     }
 
     /**
@@ -33,7 +33,7 @@ class BreadcrumbsTest extends TestCase
 
         new Breadcrumbs([
             new BasicNode('/', 'home'),
-            new BasicNode('/', 'not home')
+            new BasicNode('/', 'not home'),
         ]);
     }
 
@@ -46,7 +46,7 @@ class BreadcrumbsTest extends TestCase
 
         new Breadcrumbs([
             new BasicNode('/', 'same name'),
-            new BasicNode('/not/home', 'same name')
+            new BasicNode('/not/home', 'same name'),
         ]);
     }
 
@@ -57,7 +57,7 @@ class BreadcrumbsTest extends TestCase
     {
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
-            new BasicNode('/not/home', 'not home')
+            new BasicNode('/not/home', 'not home'),
         ]);
 
         $this->assertEquals(2, count($sut->nodes()));
@@ -70,7 +70,7 @@ class BreadcrumbsTest extends TestCase
     {
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
-            new BasicNode('/not/home', 'not home')
+            new BasicNode('/not/home', 'not home'),
         ]);
 
         $this->assertTrue($sut->isFirst($sut->nodes()[0]));
@@ -84,7 +84,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
             new BasicNode('/not/home', 'not home'),
-            new BasicNode('/is/last', 'is last')
+            new BasicNode('/is/last', 'is last'),
         ]);
 
         $this->assertTrue($sut->isLast($sut->nodes()[2]));
@@ -98,7 +98,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('/', 'home'),
             new BasicNode('/not/home', 'not home'),
-            new BasicNode('/is/last', 'is last')
+            new BasicNode('/is/last', 'is last'),
         ]);
 
         $this->assertFalse($sut->isFirst($sut->nodes()[1]));
@@ -113,7 +113,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $result = $sut->getLdJson('https://example.com');
@@ -169,7 +169,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com'), true)['itemListElement'];
@@ -207,7 +207,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com'), true)['itemListElement'];
@@ -226,7 +226,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
@@ -245,7 +245,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('/books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
@@ -264,7 +264,7 @@ class BreadcrumbsTest extends TestCase
         $sut = new Breadcrumbs([
             new BasicNode('books', 'Books'),
             new BasicNode('books/sciencefiction', 'Science Fiction'),
-            new BasicNode('books/sciencefiction/award-winners', 'Award Winners')
+            new BasicNode('books/sciencefiction/award-winners', 'Award Winners'),
         ]);
 
         $itemListElement = json_decode($sut->getLdJson('https://example.com/'), true)['itemListElement'];
